@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!-- 
+      Copyright (C) 2021 Goutham Krishna K V
+-->
+<!--   
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navy_Lead</title>
+    <!-- BULMA FRAMEWORK -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- BULMA DARK MODE -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/bulma-prefers-dark"
+    />
+    <!-- ADD INTER FONTS AS CSS -->
+    <link rel="stylesheet" type="text/css" href="fonts/inter-web/inter.css" />
+    <!-- ALL STYLES TO BE ADDED -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- VueJS Framework -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- Axios HTTP -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Font-Awesome -->
+    <script src="https://kit.fontawesome.com/a8f63e8acf.js" crossorigin="anonymous"></script>
+  </head>
+
+  <!-- APP BODY -->
+
+  <body>
+    <!-- START CONTAINER -->
+    <div id="app">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="http://gouthamkrishnakv.pages.dev">
+            <img
+              src="https://hodlinfo.com/static/media/HODLINFO.8f78fc06.png"
+              alt="Brand Icon: 'HOLDINFO'"
+              height="32px"
+            />
+          </a>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <button class="nav-item button is-medium" @click.prevent="updateData()">
+              <i class="fas fa-redo"></i>
+            </button>
+            <div class="nav-item">
+              <div class="select is-medium">
+                <select v-model="selected" class="dropdown">
+                  <div class="dropdown-trigger">
+                    <button class="button">
+                      <span>{{ datamatch[selected] }}</span>
+                    </button>
+                  </div>
+                  <option v-for="(ele, key) in datamatch" v-bind:value="ele">
+                    {{ key.toUpperCase() }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <a
+              class="navbar-item"
+              href="https://gouthamkrishnakv.pages.dev"
+              target="_blank"
+            >
+              Goutham Krishna K V
+            </a>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <section class="section">
+          <div class="columns is-vcentered">
+            <div class="column has-text-centered">
+              <div>
+                <h2 class="subtitle">Base Unit</h2>
+              </div>
+              <div v-if="data[selected]">
+                <h2 class="subtitle">
+                  {{ data[selected].base_unit.toUpperCase() }}
+                </h2>
+              </div>
+            </div>
+            <div class="column has-text-centered">
+              <div>
+                <h2 class="subtitle">Sell Price</h2>
+              </div>
+              <div v-if="data[selected]">
+                <h2 class="subtitle">
+                  {{ getCurrencyFormat(data[selected].sell) }}
+                </h2>
+              </div>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <div>
+                <h2 class="subtitle">Last Updated</h2>
+              </div>
+              <div v-if="data[selected]">
+                <h1 class="title">
+                  {{ getCurrencyFormat(data[selected].last) }}
+                </h1>
+              </div>
+            </div>
+            <div class="column has-text-centered">
+              <div>
+                <h2 class="subtitle">Buy Price</h2>
+              </div>
+              <div v-if="data[selected]">
+                <h2 class="subtitle">
+                  {{ getCurrencyFormat(data[selected].buy) }}
+                </h2>
+              </div>
+            </div>
+            <div class="column has-text-centered">
+              <div>
+                <h2 class="subtitle">Volume</h2>
+              </div>
+              <div v-if="data[selected]">
+                <h2 class="subtitle">{{ data[selected].volume }}</h2>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <table class="table is-fullwidth has-text-centered" v-if="data">
+            <thead>
+              <th><abbr title="Number">#</abbr></th>
+              <th>Name</th>
+              <th>Last</th>
+              <th>Buy/Sell Price</th>
+              <th>Volume</th>
+              <th>Base Unit</th>
+            </thead>
+            <tbody>
+              <tr v-for="(ele, i) in data" :key="i">
+                <th>{{i}}</th>
+                <th>{{ele.tname}}</th>
+                <th>{{getCurrencyFormat(ele.last)}}</th>
+                <th>{{getCurrencyFormat(ele.buy)}} / {{getCurrencyFormat(ele.sell)}}</th>
+                <th>{{ ele.volume}}</th>
+                <th>{{ ele.base_unit.toUpperCase() }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data: () => ({
+          message: "Hello, World!",
+          data: [],
+          selected: null,
+          datamatch: {},
+          ele: null,
+          i: null
+        }),
+        watch: {
+          selected() {
+            console.log(this.selected);
+          },
+        },
+        mounted() {
+          this.getData();
+        },
+        methods: {
+          clear() {
+            this.data = [];
+            this.selected = 0;
+            this.datamatch = {};
+          },
+          getCurrencyFormat(curr) {
+            return Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "INR",
+            }).format(curr);
+          },
+          getData() {
+            this.clear();
+            axios
+              .get("http://localhost:5000/")
+              .then((res) => {
+                this.data = res.data;
+                this.selected = 0;
+                this.data.forEach((ele, i) => {
+                  this.datamatch[ele.base_unit] = i;
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          },
+          updateData() {
+            this.clear();
+            axios
+              .get("http://localhost:5000/update")
+              .then((res) => {
+                this.data = res.data;
+                this.selected = 0;
+                this.data.forEach((ele, i) => {
+                  this.datamatch[ele.base_unit] = i;
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

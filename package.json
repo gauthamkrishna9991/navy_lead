@@ -1,0 +1,36 @@
+{
+  "name": "navy_lead",
+  "version": "0.1.0",
+  "description": "Postgresql Server using values from Crypto Exchanges",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"NOT IMPLEMENTED\"",
+    "serve": "nodemon src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauthamkrishna9991/navy_lead.git"
+  },
+  "keywords": [
+    "server",
+    "express",
+    "postgres",
+    "postgresql",
+    "node"
+  ],
+  "author": "Goutham Krishna K V",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/gauthamkrishna9991/navy_lead/issues"
+  },
+  "homepage": "https://github.com/gauthamkrishna9991/navy_lead#readme",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
