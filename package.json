@@ -1,6 +1,6 @@
 {
   "name": "navy_lead",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Postgresql Server using values from Crypto Exchanges",
   "main": "src/main.js",
   "scripts": {
